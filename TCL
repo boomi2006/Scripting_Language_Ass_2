@@ -1,0 +1,31 @@
+#!/usr/bin/wish
+
+wm title . "Listbox Copy and Remove Example"
+
+listbox .lb1 -width 20 -height 8
+listbox .lb2 -width 20 -height 8
+
+foreach item {Apple Banana Cherry Mango Orange Grapes Pineapple} {
+    .lb1 insert end $item
+}
+
+proc copy_item {} {
+    set sel [.lb1 curselection]
+    if {$sel ne ""} {
+        set item [.lb1 get $sel]
+        .lb2 insert end $item
+    }
+}
+
+proc remove_item {} {
+    set sel [.lb2 curselection]
+    if {$sel ne ""} {
+        .lb2 delete $sel
+    }
+}
+
+bind .lb1 <<ListboxSelect>> {copy_item}
+bind .lb2 <<ListboxSelect>> {remove_item}
+
+pack .lb1 -side left -padx 10 -pady 10
+pack .lb2 -side right -padx 10 -pady 10
